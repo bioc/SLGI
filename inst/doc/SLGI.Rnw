@@ -1,0 +1,309 @@
+
+%\VignetteIndexEntry{SLGI Vignette}
+%\VignetteDepends{}
+%\VignetteKeywords{genetic interaction}
+%\VignettePackage{SLGI}
+\documentclass[letter,12pt]{article}
+
+\usepackage{amsmath,pstricks,fullpage}
+\usepackage{hyperref} 
+\usepackage{xr-hyper}
+\usepackage[authoryear,round]{natbib}
+\usepackage{color}
+\usepackage{subfigure}
+
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textsf{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+\newcommand{\Special}[1]{{\texttt{#1}}}
+
+\title{Synthetic Genetic Interaction in Yeast genes}
+\author{N. LeMeur and Z. Jiang}
+
+\begin{document}
+
+\maketitle
+\section{Introduction}
+Synthetic genetic interactions experiments are now being conduct to
+better understand cellular interactions. The generated data have
+already proven to be extremely valuable \citep{Davierwala2005,
+  Tong2004, Zhao2005}.  Synthetic lethality especially defines a
+genetic interaction were the combination of mutations in two or more
+genes leads to cell death.  The implications of synthetic lethal
+screens have been discussed in the context of drug development as
+synthetic lethal pairs could be used to selectively kill cancer cells,
+but leave normal cells relatively unharmed.
+
+In this package, we propose statistical and computational tools for a
+systems biology approach in analyzing synthetic genetic
+interactions. Currently, our methods can be used to find
+relationships between synthetic genetic interactions and cellular
+organizational units such multi-protein complexes or sequence motifs.
+
+\section{Synthetic genetic interaction data}
+Several synthetic genetic datasets are now publicly available. In this
+package we currently propose 6 datasets:
+\begin{itemize}
+\item \cite{Tong2004} Systematic genetic analysis with ordered arrays of yeast deletion
+\item \cite{Pan2006}  DNA integrity experiment in \textit{S. cerevisiae}
+\item \cite{measday2005sys} Systematic yeast synthetic lethal and
+  synthetic dosage lethal screens identify genes required for
+  chromosome segregation.
+\item \cite{schuldiner2005efa} Genetic Interaction Data (EMAP) from
+  the yeast early secretory pathway
+\item \cite{Collins2007} Functional dissection of protein complexes
+  involved in yeast chromosome biology using a genetic interaction
+  map.
+\item \cite{Chervitz} Synthetic genetic interaction data from as recorded by the
+Saccharomyces Genome database in January, 2007.
+\end{itemize} 
+
+In this package and as reported by most authors, we use the terms
+\textit{query genes} for the genes that are specifically tested by the
+experimenter and \textit{array genes} for the target genes usually
+spotted on a array (\textit{e.g.,} SGA, dSLAM). We note however that
+an analogy can be made with the concept of \textit{bait} and
+\textit{prey} terms used in proteomic experiments (\textit{e.g.,} Y2H,
+APMS).
+
+\subsection{Synthetic genetic array data, Tong et al. (2004)}
+\cite{Tong2001} used the \textit{Synthetic Genetic Array technology}
+or SGA to investigate synthetic genetic interaction in
+\textit{S. cerevisiae}. The package \Rpackage{SLGI} contains both the
+raw and preprocessed data from \cite{Tong2004}. To access those data
+you first need to load the package \Rpackage{SLGI} and the yeast
+genome annotation package (\Rpackage{org.Sc.sgd.db}):
+
+<<set up,results=hide>>=
+library("SLGI")
+library("org.Sc.sgd.db")
+
+##loading Tong et al data
+data(SGA)
+data(Atong)
+@ 
+
+Data \Robject{SGA} contains the systematic names of all the
+\Sexpr{length(SGA)} genes tested by \cite{Tong2004}, including both
+the ones that were reported as presenting synthetic genetic
+interactions and the ones that were not (\Robject{SGAraw} corresponds
+to the original list parsed from table1 of \cite{Tong2001}
+supplementary material).
+
+We can verify that the genes reported by \cite{Tong2004} are well
+characterized. To that aim, we use the yeast annotation data package
+\Rpackage{org.Sc.sgd.db}:
+
+<<rejected>>=
+rejected <- length(intersect(SGA, org.Sc.sgdREJECTORF))
+@ 
+
+We note that at this time \Sexpr{rejected} genes (out of the
+\Sexpr{length(SGA)}) are among the rejected ORF listed by the
+\textit{Saccharomyces} Genome Database (SGD
+\href{http://www.yeastgenome.org/}{http://www.yeastgenome.org/}).  If
+one want to update common gene names or alias to systematic names, one
+can use the following:
+
+<<aliasMatch>>=
+updateSGA=mget(SGA, org.Sc.sgdCOMMON2ORF, ifnotfound = NA )
+@ 
+
+The \Robject{tong2004raw} data.frame contains the original data
+reported by \cite{Tong2004} as Table S1 in their online supporting
+material. The \Robject{Atong} data contains the association matrix
+extracted from the \Robject{tong2004raw} data.frame.  The gene names
+were updated for systematic gene names.  They selected
+\Sexpr{dim(Atong)[[1]]} query genes that are known involved in a
+chosen set of molecular functions.
+
+<<essential genes in query gene list, echo=FALSE, results=hide>>=
+data(essglist)
+esg = names(essglist)
+n1 <- sum( esg %in% dimnames(Atong)[[1]])
+n2 <- sum( esg %in% dimnames(Atong)[[2]])
+@ 
+
+There are \Sexpr{n1} essential genes found in the query genes.
+\cite{Tong2004} pointed out that some of the query genes are partially
+functioning alleles of essential genes.  So, we assumed these genes
+are fine.  There are also \Sexpr{n2} essential genes in the reported
+array genes that showed synthetic lethal (SL) interaction with at
+least one of the query genes.  We checked these three genes.  Two of
+them, "YJL174W" and "YPL075W" , are annotated both "lethal" and
+"viable" in the \Special{SGD} database.  The other gene, "YBR121C", is
+"lethal".  We don't have the resources to tract down why this gene
+appears on the \Special{SGA} array \cite{Tong2001}.
+
+\subsubsection{Synthetic lethal and synthetic dosage lethal screens, Measday et al (2005)}
+
+\cite{measday2005sys} perform some systematic yeast synthetic lethal
+and synthetic dosage lethal screens using the SGA approach
+\citep{Tong2001}.  They first tested 14 query genes and found 84
+non-essential genes that synthetically interact with at least one
+query gene (\Robject{SLchr}).  Then they tested interaction between 3
+query genes and the genome wide set of deletion strains under 3
+different temperatures. They found 141 array genes that interact at
+least with one query gene (\Robject{SDL}). They identified genes
+required for chromosome segregation.
+
+\subsection{DNA integrity experiment in S. cerevisiae, Pan et al (2006)}
+The package contains raw and preprocessed data from \cite{Pan2006}
+obtained in Boeke's lab.
+<<>>=
+data(Boeke2006raw)
+data(Boeke2006)
+@ 
+
+\Robject{Boeke2006raw} is a data frame with 5775 observations and
+\Robject{Boeke2006} is an incidence matrix reporting the systematic
+genetic interactions identified between 74 query genes and the
+deletion gene set in \cite{Pan2004} (see man pages for more details).
+
+The technology used by Boeke and collaborators is slightly different
+from the approach taken by \cite{Tong2001}. The used heterozygote
+diploid-based synthetic lethality analyzed by microarray (dSLAM). The
+21991 probes spotted on the dSLAM array are available by calling
+\Robject{dSLAM.GPL1444} or \Robject{dSLAM} (see man pages for more
+details).
+
+\subsection{Genetic Interaction Data (EMAP), Schuldiner et al (2005) and Collins (2007)}
+We also collected data generated by Collins and
+collaborators. These data are different from the other as they have be
+heavily preprocessed using their own procedure, EMAP or epistatic
+miniarray profiles. Those data are presented as incidence matrix and
+are accompanied by some metadata, e.g., systematic names and mutated
+allele. 
+
+<<>>=
+## Schuldiner et al. (2005)
+data(gi2005)
+data(gi2005.metadata)
+@ 
+
+\subsection{Saccharomyces Genome database}
+We provide synthetic genetic interaction data as recorded by the
+Saccharomyces Genome database in January, 2007. Data can be accessed
+using \Robject{SGD.SL}, synthetic lethal, \Robject{SGD.SynRescue},
+synthetic rescue, and \Robject{SGD.SynGrowthDefect}, synthetic growth
+defect.
+
+\section{Transcription Factor data}
+The transcription factor binding affinities data were extracted from
+\cite{Lee2002}. They represented as an matrix where rows are
+\textit{S. cerevisiae} systematic gene names and columns known transcription
+factor.  The value in each entry represents the p-value, as reported
+by \cite{Lee2002}, for the transcription factor (TF) binding upstream
+of the gene.
+
+<<>>=
+data(TFmat)
+@ 
+
+\section{Example of analysis: Synthetic genetic interactions and multi-protein complexes}
+To integrate synthetic genetic interactions with multi-protein
+complexes, we can make use of the interactome as defined in the
+\Rpackage{ScISI} package. The \Rpackage{ScISI} package or \textit{In
+  Silico Interactome for Saccharomyces cerevisiae} provides an
+interactome built for computational experimentation.  The
+\Robject{ScISI} is binary incidence matrix where the rows are indexed
+by the gene locus names and the columns are indexed by the
+identification codes for the protein complexes based on the repository
+from where they are obtained. This interactome is currently built from
+the Intact, Gene Ontology and Mips curated databases, and estimated
+protein complexes from the \Rpackage{apComplex} package. In this
+vignette, we will make use of a subset of the \Robject{ScISI}
+interactome, the \Robject{ScISIC} data, that only contains the data
+from the curated databases.
+
+<<ScISI>>=
+library(ScISI)
+data(ScISIC)
+ScISIC[1:5, 1:5]
+@ 
+
+As an example we will use the data generated by \cite{Pan2006}.First,
+one need to reduce the interactome matrix and genetic interaction
+matrix to the same list of genes. This can be done using the
+\Rfunction{gi2Interactome} function.
+<<>>=
+data(Boeke2006)
+data(dSLAM)
+
+dim(Boeke2006)
+Boeke2006red <- gi2Interactome(Boeke2006, ScISIC)
+dim(Boeke2006red)
+@ 
+
+Next we can identify multi-protein complexes that present synthetic
+interaction among their proteins (\bf{within} interaction) or share
+synthetic interaction with other multi-protein complex (\bf{between}
+interaction) using the \Rfunction{getInteraction} function. This
+function requires the incidence matrix, the array list and the
+interactome of interest.
+
+<<>>=
+interact <- getInteraction(Boeke2006red, dSLAM, ScISIC)
+@ 
+
+Then, one might want to know how what are the multi-protein complexes that
+share at least \textit{n} interactions:
+<<>>=
+intSummary <- iSummary(interact$bwMat, n=5)
+@ 
+
+Finally, we want to know if any of those interactions are
+statistically significant. To that aim we developed 2
+approaches. First, using a graph theory approach, we test whether those
+interactions are randomly distributed within the interactome.
+
+<<>>=
+modelBoeke <- modelSLGI(Boeke2006red, 
+          universe= dSLAM, interactome=ScISIC,type="intM", perm=5)
+@ 
+
+A \Rfunction{plot} function allows you the visualize the result. In
+this case, we note that the number of observed synthetic genetic
+interaction is globally higher that the simulated data
+
+<<eval=FALSE>>=
+plot(modelBoeke,pch=20)
+@ 
+<<echo=FALSE,fig=TRUE>>
+print(plot(modelBoeke,pch=20))
+@ 
+
+Note that here, for computer time efficiency, we only performed 5
+permutations but for really analysis 100 permutations or more are
+strongly recommended.
+
+Next, we can perform a Hypergeometric test to identify the
+multi-protein complexes that presents a unusual number of synthetic
+genetic interaction. 
+
+The \Rfunction{test2Interact} function allows you
+to summarize the genetic interactions within one cellular
+organizational unit or between 2 cellular organizational units, taking
+into account all the interactions tested (positive or negative).
+One can compute the global interaction matrix as follows:
+
+<<eval=FALSE>>=
+array <- dSLAM[dSLAM %in% rownames(ScISIC)]
+query <- rownames(Boeke2006)[rownames(Boeke2006) %in% rownames(ScISIC)]
+allInteract <- matrix(1, nrow=length(query), ncol=length(array),
+               dimnames=list(query, array))
+tested <- getInteraction(allInteract, dSLAM, ScISIC)
+@ 
+
+<<eval=FALSE>>=
+testedInteract <- test2Interact(iMat=interact$bwMat, tMat=tested$bwMat, interactome=ScISIC)
+significant <- hyperG(cbind("Tested"=testedInteract$tested,"Interact"=testedInteract$interact), 
+              sum(Boeke),  nrow(Boeke2006red)*length(dSLAM)) 
+@ 
+
+
+\bibliographystyle{plainnat}
+\bibliography{SLGI}
+
+\end{document}

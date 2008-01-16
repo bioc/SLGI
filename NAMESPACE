@@ -1,0 +1,35 @@
+qimport("methods")
+importFrom("Biobase",reverseSplit)
+importFrom("Biostrings",readFASTA)
+importFrom("lattice", xyplot)
+           
+export("gi2Interactome",
+       "getInteraction",
+       "getSharedInteraction",
+       "hyperG",
+       "comemberIn",
+       "congruence",
+       "normInteraction",
+       "topInteraction",
+       "createSquareMatrix",
+       "byComplex",
+       "domainDist",
+       "getSharedDomains",
+       "sharedBy",
+       "getUniquePairs",
+       "getTestedPairs",
+       "seqMatcherAlign",
+       "getAlignStats",
+       "twoWayTable",
+       "modelSLGI",
+       "getFASTAname",
+       "test2Interact",
+       "iSummary",
+       "withinComplex",
+       "sharedInt")
+
+exportClasses("siResult")
+
+exportMethods("plot",
+              "compare",
+              "show")
