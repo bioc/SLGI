@@ -38,10 +38,5 @@
   type="intM", perm=2)
 
 model
-
-## plot result
-plot(model)
-
-
 }
 \keyword{classes}

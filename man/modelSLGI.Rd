@@ -38,7 +38,8 @@ modelSLGI(iMat, universe, interactome,  type="intM", perm=50)
  data(ScISIC)
  data(Atong)
  data(SGA)
- model <-  modelSLGI(Atong, universe= SGA, interactome=ScISIC, type="intM", perm=5)
+ model <-  modelSLGI(Atong, universe= SGA, interactome=ScISIC,
+type="intM", perm=2)
  }
 \keyword{data}
 \keyword{manip}

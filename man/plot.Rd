@@ -30,7 +30,8 @@
 data(ScISIC)
 data(Atong)
 data(SGA)
-model <-  modelSLGI(Atong, universe= SGA, interactome=ScISIC, type="intM", perm=3)
+model <-  modelSLGI(Atong, universe= SGA, interactome=ScISIC,
+type="intM", perm=2)
 plot(model)
 }
 \keyword{data}

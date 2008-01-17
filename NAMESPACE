@@ -1,4 +1,4 @@
-qimport("methods")
+import("methods")
 importFrom("Biobase",reverseSplit)
 importFrom("Biostrings",readFASTA)
 importFrom("lattice", xyplot)

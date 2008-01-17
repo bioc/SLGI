@@ -258,7 +258,7 @@ statistically significant. To that aim we developed 2
 approaches. First, using a graph theory approach, we test whether those
 interactions are randomly distributed within the interactome.
 
-<<>>=
+<<eval=FALSE>>=
 modelBoeke <- modelSLGI(Boeke2006red, 
           universe= dSLAM, interactome=ScISIC,type="intM", perm=5)
 @ 

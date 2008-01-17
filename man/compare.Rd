@@ -28,7 +28,7 @@ of permutations applied.}
 data(ScISIC)
 data(Atong)
 data(SGA)
-model <-  modelSLGI(Atong, universe= SGA, interactome=ScISIC, type="intM", perm=5)
+model <-  modelSLGI(Atong, universe= SGA, interactome=ScISIC, type="intM", perm=2)
 ans <- compare(model)
 }
 \keyword{data}
