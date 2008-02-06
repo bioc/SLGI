@@ -72,7 +72,21 @@ sharedInt <- function(pairL, interactome, threshold=0){
     ans
 }  
 
+##-------------------------------------------------------
+##
+## Compute shared interaction: who's where
+## an attempt to answer pleiotropy
+##--------------------------------------------------------
+sharedIntMat <-function(pairL, interactome){
 
+    xx <- cbind(pairL[,1:2],as.logical(pairL[,3]))
+    sh <- sharedInt(xx, interactome,threshold=1)
+
+    lapply(strsplit(names(sh),"--"), function(x) { 
+        comp=names(pairL[[paste(x[1],x[2],sep="--")]]); 
+        interactome[x,comp]})
+    
+}
 
 ##-------------------------------------------------------
 ##

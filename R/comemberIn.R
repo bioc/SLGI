@@ -23,7 +23,8 @@ comemberIn <- function(iMat, interactome){
     }
     names(result) <- paste(rnData[data2complex[, 1]], "-", cnData[data2complex[, 2]], sep="")
     
-    ans <- unlist(result)
+    ##ans <- unlist(result)
+    ans <- result
     return(ans)
     
 }
