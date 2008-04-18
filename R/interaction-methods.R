@@ -181,7 +181,7 @@ gi2Interactome <- function(iMat, interactome, threshold=0) {
 ##                                                                ##
 ##----------------------------------------------------------------##
 iSummary <- function(iMat, n=10, reverse=FALSE){
-##would be nice to have MIPs also
+
     iMat[upper.tri(iMat)] = 0
     wH = which(iMat> 0)
     nM = nrow(iMat)
@@ -191,25 +191,56 @@ iSummary <- function(iMat, n=10, reverse=FALSE){
     
     ans=rep(NA, length(wH))
     for(i in 1:length(wH)) ans[i] = iMat[row[i], col[i]]
+
     
     complexP = vector("list", length=length(ans))
     for(i in 1:length(wH)) complexP[[i]] = c(rownames(iMat)[row[i]],
                                      colnames(iMat)[col[i]])
-
+    ## for annotation
+    thecomp = unlist(complexP)
+    ##GO
+    thego = grep("^GO", thecomp)
+    if(length(thego)>0){
+        if(require("GO.db"))
+        gocomplex = unique(thecomp[thego])
+        xx = as.list(GOTERM)
+        annot =  xx[gocomplex]
+        goTerm = sapply(annot,function(x) if(!is.null(x)){Term(x)}else{NA})
+        names(goTerm) = gocomplex
+    }
+    ##MIPS
+    themips = grep("^MIPS", thecomp)
+    if(length(themips)>0){
+        mipscomplex = unique(thecomp[themips])
+        mips = getMipsInfo()
+        mipsTerm = mips[mipscomplex]
+        mipsTerm = sapply(mipsTerm, function(x) attr(x, "desc"))
+    }
+    ##KEGG and EBI to work on    
+        
     names(complexP) = ans
     largeS = which(ans > n)
     ansL = ans[largeS]
-    ##if(required(library("GO")))
-    for(i in seq(along=largeS)) {
-        cat(sprintf("---------Count: %2d -----------\n", ansL[i]))
-        for(j in complexP[[largeS[i]]]) {
-            cat(j)
-            if(regexpr("^GO", j)>0) 
-              cat(" ", Term(GOTERM[[j]]))
-            cat("\n")
-        }
-    }
 
+  
+      for(i in seq(along=largeS)) {
+          cat(sprintf("---------Count: %2d -----------\n", ansL[i]))
+          for(j in complexP[[largeS[i]]]) {
+              cat(j)
+              if(regexpr("^GO", j)>0)
+                  annot = goTerm[j]
+              if(regexpr("^MIPS", j)>0)
+                  annot = mipsTerm[j]
+              
+              if(!is.null(annot) & !is.na(annot)){
+                  cat(" ", annot)         
+              }else {
+                  cat(" Not found (possibly deprecated)")
+              }
+              cat("\n") 
+          }
+      }
+    
     if(reverse==FALSE){    
         res <- complexP[largeS]
     } else{

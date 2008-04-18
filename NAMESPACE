@@ -1,7 +1,8 @@
 import("methods")
-importFrom("Biobase",reverseSplit)
-importFrom("Biostrings",readFASTA)
-importFrom("lattice", xyplot)
+importFrom("Biobase","reverseSplit")
+importFrom("AnnotationDbi","as.list")
+importFrom("Biostrings","readFASTA")
+importFrom("lattice", "xyplot")
            
 export("gi2Interactome",
        "getInteraction",

@@ -11,7 +11,7 @@ modelSLGI <- function(iMat, universe, interactome, type="intM", perm=50){
 
     obs <-  getInteraction(SLa, universe, interactomeR)$bwMat
     obsi <- as(obs, "vector")
-    names(obsi) <- paste(rownames(obs), rep(colnames(obs), each = nrow(obs)), sep="-")
+    names(obsi) <- paste(rownames(obs), rep(colnames(obs), each = nrow(obs)), sep="--")
 
     ##fornat result
     Inti <- vector(mode="list", length=perm)
