@@ -8,7 +8,8 @@
 \usage{getSharedDomains(geneNameV, env)}
 \arguments{
   \item{geneNameV}{ Character vector of gene names.  }
-  \item{env}{Name of the domain environment. }
+  \item{env}{R object that provides mappings between an
+     entrez gene identifier and the associated Pfam identifiers.}
 }
 \value{
   \code{getSharedDomains} returns a vector of the names of the shared domains.
@@ -16,7 +17,7 @@
 \author{ Z. Jiang }
 \seealso{ \code{\link{domainDist}}, \code{\link{sharedBy}} }
 \examples{
-data(AtongPair)
-getSharedDomains(AtongPair["YEL003W-YLR200W",1:2],  YEASTPFAM)
+library("org.Sc.sgd.db")
+getSharedDomains(c("YEL003W","YLR200W"),  org.Sc.sgdPFAM)
 }
 \keyword{ methods }

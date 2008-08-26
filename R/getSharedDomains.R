@@ -1,10 +1,14 @@
 getSharedDomains <- function(geneNameV,env) {
+  if(is.environment(env)){
+    stop("Environment are deprecated from genome annotation. Use database annotation package")
+  }
   gnV <- as.matrix(geneNameV)
+  env <- as.list(env)
   l <- length(gnV)
   if ( l <= 0 ) {
     stop("Zero or negative length name vector")
   } else {
-    domains <- mget(gnV,env,ifnotfound=NA)
+    domains <- env[gnV]
     i <- 1
     sharedDomains <- domains[[i]]
     i <- i+1

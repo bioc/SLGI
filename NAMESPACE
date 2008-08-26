@@ -3,7 +3,8 @@ importFrom("Biobase","reverseSplit")
 importFrom("AnnotationDbi","as.list")
 importFrom("Biostrings","readFASTA")
 importFrom("lattice", "xyplot")
-           
+importFrom("graphics","plot")
+
 export("gi2Interactome",
        "getInteraction",
        "getSharedInteraction",
