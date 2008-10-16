@@ -22,7 +22,7 @@ getFASTAname(Fobj)
 \author{ Z. Jiang }
 \seealso{ \code{\link[Biostrings]{readFASTA}} }
 \examples{
-f <- gzfile(file.path(.path.package("SLGI"), "extdata/orf_trans.fasta.gz"))
+f <- gzfile(file.path(.path.package("SLGI"), "extdata/orf_trans.fasta.gz"), open = "rt")
 library(Biostrings)
 yeastF <- readFASTA(f)
 sapply(yeastF[1:5],getFASTAname)
