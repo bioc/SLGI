@@ -1,6 +1,6 @@
 Package: SLGI
 Title: Synthetic Lethal Genetic Interaction
-Version: 1.1.4
+Version: 1.2.0
 Author:  Nolwenn LeMeur, Zhen Jiang, Ting-Yuan Liu, Jess Mar and  Robert Gentleman
 Description: A variety of data files and functions for the analysis of genetic interactions
 Depends: R (>= 2.6.0), ScISI, lattice, methods, org.Sc.sgd.db, GO.db
