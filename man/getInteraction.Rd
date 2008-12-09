@@ -17,7 +17,7 @@
 }
 \value{
   The returned value is a list of 2 matrices:
-  \item{bwMat} {A interaction matrix that corresponds to the  cellular
+  \item{bwMat}{A interaction matrix that corresponds to the  cellular
     organizational units interaction matrix where row and columns a
     organizational units names and the value inside the
     matrix are the number of genetic interactions they share.}

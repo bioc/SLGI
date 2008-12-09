@@ -10,7 +10,7 @@
 \arguments{
   \item{data}{Square Matrix of biological complexes that shares one or
     more genes(proteins)}
-   \item{genename} {Character vector of the gene names that possibly
+   \item{genename}{Character vector of the gene names that possibly
      create interactions between complexes}
    \item{interactome}{Adjacency matrix where row are genes and
     columns are cellular organizational units. Each entry has
