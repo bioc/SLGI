@@ -1,9 +1,12 @@
 import("methods")
-importFrom("Biobase","reverseSplit")
-importFrom("AnnotationDbi","as.list")
-importFrom("Biostrings","readFASTA")
+importMethodsFrom("AnnotationDbi", "Term")
+importFrom("AnnotationDbi", "as.list")
+importFrom("Biobase", "reverseSplit")
+importFrom("ScISI", "getMipsInfo")
+importFrom("graphics", "plot")
 importFrom("lattice", "xyplot")
-importFrom("graphics","plot")
+importFrom("stats", "phyper", "quantile")
+importFrom("GO.db", "GOTERM")
 
 export("gi2Interactome",
        "getInteraction",
