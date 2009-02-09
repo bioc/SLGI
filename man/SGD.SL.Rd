@@ -11,7 +11,9 @@ yeast. This table was downloaded on Jan 25, 2007 and three subsets were
 extracted. The synthetic lethal interactions, \code{SGD.SL}, the
 synthetic grow defect interactions, \code{SGD.SynGrowthDefect} and the
 synthetic rescue interactions, \code{SGD.SynRescue}. No other processing
-has been done.  } \usage{
+has been done.  } 
+
+\usage{
   data(SGD.SL)
   data(SGD.SynRescue)
   data(SGD.SynGrowthDefect)
@@ -19,17 +21,18 @@ has been done.  } \usage{
 \format{
  Each data set is a data frame with  the following 7 variables.
   \describe{
-    \item{\code{V1}}{Factor, indicating the type of data.}}
+    \item{\code{V1}}{Factor, indicating the type of data.}
     \item{\code{V2}}{Factor describing the interaction,
      in particular naming bait and prey and interactors.}
     \item{\code{V3}}{Factor indicating whether the cells were
-       viable.}
+     viable.}
     \item{\code{V4}}{Factor which is always NA for these data.}
     \item{\code{V5}}{Factor naming the reference for the interaction.}
     \item{\code{V6}}{Factor with levels indicating the PubMed ID for
      the publication in V5.}
     \item{\code{V7}}{Factor with level \code{BioGRID}, probably
      indicating the source.}
+  }
 }
 \details{
 SGD says this about the file:

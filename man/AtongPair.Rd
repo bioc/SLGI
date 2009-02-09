@@ -15,10 +15,12 @@ A data frame with 3 columns and 607881 rows.
 \details{
   \code{AtongPair} stores the yeast gene names for each tested pairs in Tong
   buffering experiment.  Each row represents one pair.
-  \item{query}{Query gene name }
-  \item{array}{Array gene name }
-  \item{interact}{Logical indicating the synthetic lethal status, if TRUE
-    the genetic interaction is lethal.}
+  \describe{
+    \item{query}{Query gene name }
+    \item{array}{Array gene name }
+    \item{interact}{Logical indicating the synthetic lethal status, if TRUE
+      the genetic interaction is lethal.}
+  }
 }
 \source{
   Created from the association matrix reported by Tong et al (2004) and
@@ -27,10 +29,10 @@ A data frame with 3 columns and 607881 rows.
 }
 \references{
  Systematic genetic analysis with ordered arrays of yeast deletion
- mutants, Tong et al, Science. Vol. 294, 2001
+ mutants, Tong et al, \emph{Science}. Vol. 294, 2001
 
   Global Mapping of the Yeast Genetic Interaction Network, Tong et al,
-  Science Vol.303, 2004
+  \emph{Science} Vol.303, 2004
 }
 
 \author{

@@ -8,12 +8,14 @@
 \usage{data(AtongFnDomain)}
 \format{
   A list containing 3 items.
-  \item{pairs}{Dataframe of all the gene pairs and their synthetic
-    lethality status. }
-  \item{SharedPfam}{List of the Pfam domains shared by each pair.
-    The order of this list is the same as the order of the pairs.}
-  \item{SharedSMART}{List of the SMART domains shared by each pair.
-    The order of this list is also the same as the order of the pairs.}
+  \describe{
+    \item{pairs}{Dataframe of all the gene pairs and their synthetic
+      lethality status. }
+    \item{SharedPfam}{List of the Pfam domains shared by each pair.
+      The order of this list is the same as the order of the pairs.}
+    \item{SharedSMART}{List of the SMART domains shared by each pair.
+      The order of this list is also the same as the order of the pairs.}
+  }
 }
 \source{
   Created from the association matrix reported by Tong et al. and the
