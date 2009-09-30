@@ -54,6 +54,7 @@ Pan X, Ye P, Yuan DS, Wang X, Bader JS, Boeke JD.
 A DNA integrity network in the yeast Saccharomyces cerevisiae.
 Cell. 2006 Mar 10;124(5):1069-81
 }
-\seealso{\code{\link[SLGI]{Boeke2006raw}} \code{\link[SLGI]{Boeke2006}}}
+\seealso{\code{\link[SLGI:Boeke]{Boeke2006raw}}, and
+  \code{\link[SLGI:Boeke]{Boeke2006}}} 
 
 \keyword{datasets}

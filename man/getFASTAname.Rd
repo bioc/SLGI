@@ -10,7 +10,7 @@ getFASTAname(Fobj)
 }
 \arguments{
   \item{Fobj}{ is a FASTA object created by \code{\link[Biostrings]{readFASTA}} function
-  from \code{\link[Biostrings]{Biostrings}} package.}
+  from \pkg{Biostrings}} package.}
 }
 \details{
   The function gets the first string between ">" and space the "desc"
@@ -22,9 +22,10 @@ getFASTAname(Fobj)
 \author{ Z. Jiang }
 \seealso{ \code{\link[Biostrings]{readFASTA}} }
 \examples{
-f <- gzfile(file.path(.path.package("SLGI"), "extdata/orf_trans.fasta.gz"), open = "rt")
+f <- gzfile(file.path(.path.package("SLGI"),
+            "extdata/orf_trans.fasta.gz"), open = "rt") 
 library(Biostrings)
 yeastF <- readFASTA(f)
-sapply(yeastF[1:5],getFASTAname)
+sapply(yeastF[1:5], getFASTAname)
 }
 \keyword{methods}

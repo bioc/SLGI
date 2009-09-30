@@ -58,7 +58,7 @@ Spencer F, Boeke JD.
 A robust toolkit for functional profiling of the yeast genome.
 Mol Cell. 2004 Nov 5;16(3):487-96.
 }
-\seealso{\code{\link[SLGI]{dSLAM.GPL1444}} \code{\link[SLGI]{dSLAM}}}
+\seealso{\code{\link[SLGI]{dSLAM.GPL1444}}, and \code{\link{dSLAM}}}
 
 
 \keyword{datasets}

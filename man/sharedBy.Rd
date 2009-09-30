@@ -20,7 +20,8 @@
 }
 
 \author{ Z. Jiang }
-\seealso{ \code{\link[Biostrings]{reverseSplit}}, \code{\link{domainDist}}, \code{\link{getSharedDomains}} }
+\seealso{ \code{\link[Biobase]{reverseSplit}}, \code{\link{domainDist}},
+  \code{\link{getSharedDomains}} } 
 \examples{
 ## Load PFAM and SMART domains shared between Tong's Synthetic lethal data
 data(AtongFnDomain)
