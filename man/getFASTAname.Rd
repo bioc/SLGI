@@ -9,9 +9,11 @@
 getFASTAname(Fobj)
 }
 \arguments{
-  \item{Fobj}{ is a FASTA object created by \code{\link[Biostrings]{readFASTA}} function
-  from \pkg{Biostrings}} package.}
-}
+  \item{Fobj}{ is a FASTA object created by
+    \code{\link[Biostrings]{readFASTA}} function from \pkg{Biostrings}}
+  package.
+} 
+
 \details{
   The function gets the first string between ">" and space the "desc"
   element of the \code{Fobj}, which is the names of the sequence.
