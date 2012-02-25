@@ -1,5 +1,6 @@
 import("methods")
 importMethodsFrom("AnnotationDbi", "Term")
+importMethodsFrom("BiocGenerics", "plot")
 importFrom("AnnotationDbi", "as.list")
 importFrom("Biobase", "reverseSplit")
 importFrom("ScISI", "getMipsInfo")
