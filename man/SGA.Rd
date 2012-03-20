@@ -35,8 +35,5 @@
 \examples{
  data(SGAraw)
  length(SGAraw)
-
- if(require("YEAST"))
- updateSGA <- mget(SGAraw, YEASTCOMMON2SYSTEMATIC, ifnotfound = SGAraw)
- }
+}
 \keyword{datasets}

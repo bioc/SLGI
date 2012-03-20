@@ -13,7 +13,7 @@
 }
 \details{
   The aliases of the yeast gene names can be retrieved with the
-  \code{YEASTALIAS} environment of the \code{YEAST} package.
+  \code{org.Sc.sgdALIAS} environment of the \code{org.Sc.sgd.db} package.
 }
 \source{
   Saccharomyces Genome Database

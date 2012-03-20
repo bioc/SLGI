@@ -42,7 +42,7 @@ data(dSLAM)
   correspond to custom sequences and other were dubious ORFs that have
   been  deleted from SGD or merged with other ORFs. Secondly, the duplicated
   names were removed.  Then, the systematic ORF names were verified against
-  the YEAST data package.
+  the org.Sc.sgd.db data package.
   
 }
 \source{

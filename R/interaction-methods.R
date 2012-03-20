@@ -110,7 +110,7 @@ getInteraction <- function(iMat, universe, interactome) {
     
     ## prepare results
     nComplex <- ncol(interactomeSub)
-    bwMat <-  matrix(0, nc=nComplex, nr=nComplex)
+    bwMat <-  matrix(0, nComplex, nComplex)
     row.names(bwMat) <-  colnames(bwMat) <- colnames(interactomeSub)
 
     ## count all genetic interactions recorded
@@ -135,7 +135,7 @@ getInteraction <- function(iMat, universe, interactome) {
     inAandC = intersect(inA, rownames(interactomeSub))
     
     ## prepare results
-    fixupM = matrix(0, nc=nComplex, nr=nComplex)
+    fixupM = matrix(0, nComplex, nComplex)
 
     ## count genetic interactions counted twice
     for( i in 1:(length(inAandC)-1) ) {
