@@ -1,6 +1,6 @@
 Package: SLGI
 Title: Synthetic Lethal Genetic Interaction
-Version: 1.55.0
+Version: 1.55.1
 Author: Nolwenn LeMeur, Zhen Jiang, Ting-Yuan Liu, Jess Mar and Robert
         Gentleman
 Description: A variety of data files and functions for the analysis of
@@ -12,3 +12,4 @@ Suggests: GO.db, org.Sc.sgd.db
 Maintainer: Nolwenn Le Meur <nlemeur@gmail.com>
 License: Artistic-2.0
 biocViews: GraphAndNetwork, Proteomics, Genetics, Network
+PackageStatus: Deprecated
